@@ -40,7 +40,7 @@ describe('app routes', () => {
     ]);
 
     return request(app)
-      .get('api/v1/studios')
+      .get('/api/v1/studios')
       .then(res => {
         const studiosJSON = JSON.parse(JSON.stringify(studios));
         studiosJSON.forEach(studio => {
