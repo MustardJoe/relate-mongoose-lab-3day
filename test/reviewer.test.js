@@ -32,4 +32,22 @@ describe('app routes', () => {
         });
       });
   });
+
+  it('can get all the reviewers', async() => {
+    const reviewers = await Reviewer.create([
+      { name: 'jorb', company: 'jorbCo' },
+      { name: 'party dood', company: 'darkstar' },
+      { name: 'philosopher king', company: 'shadow'},
+    ]);
+
+    return request(app)
+      .get('/api/v1/reviewers')
+      .then(res => {
+        const reviewersJSON = JSON.parse(JSON.stringify(reviewers));
+        reviewersJSON.forEach(reviewer => {
+          expect(res.body).toContainEqual(reviewer);
+        });
+      });
+  });
+
 });
