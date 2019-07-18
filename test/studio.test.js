@@ -44,9 +44,14 @@ describe('app routes', () => {
       .then(res => {
         const studiosJSON = JSON.parse(JSON.stringify(studios));
         studiosJSON.forEach(studio => {
+          // expect(res.body).toContainEqual({ name: studio.name, _id: studio._id });
           expect(res.body).toContainEqual(studio);
         });
       });
   });
+
+  // it('can get one(1) studio by index numb', async() => {
+
+  // });
 });
 
