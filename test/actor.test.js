@@ -30,6 +30,23 @@ describe('app routes', () => {
           __v: 0
         });
       });
+  });
 
+  it('gets all the actors', async() => {
+    const actors = await Actor.create([
+      { name: 'Bruce Campbell' },
+      { name: 'Jeff Bridges' },
+      { name: 'Angelica Houston' },
+    ]);
+
+    //start here - second part of gett all actors method
+    return request(app)
+      .get('/api/v1/actors')
+      .then(res => {
+        const actorsJSON = JSON.parse(JSON.stringify(actors));
+        actorsJSON.forEach(actor => {
+          expect(res.body).toContainEqual(actor);
+        });
+      });
   });
 });
