@@ -35,7 +35,7 @@ describe('app routes', () => {
     return mongoose.connection.close();
   });
 
-  it('can POST and actor', () => {
+  it('can POST an actor', () => {
     return request(app)
       .post('/api/v1/actors')
       .send({ name: 'Bruce Campbell' })
@@ -71,10 +71,26 @@ describe('app routes', () => {
     return request(app)
       .get(`/api/v1/actors/${actor._id}`)
       .then(res => {
+        // console.log(film);
         const actorJSON = JSON.parse(JSON.stringify(actor));
-        console.log(res.body);
         expect(res.body).toEqual({
           ...actorJSON, films: [film]
+        });
+      });
+  });
+
+  it('can update a single actor with PUT', async() => {
+    return request(app)
+      .put(`/api/v1/actors/${actor._id}`)
+      .send({
+        birthLocation: 'Santa Monica, CA'
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.any(String),
+          name: 'Anjelica Huston',
+          birthLocation: 'Santa Monica, CA',
+          __v: 0,
         });
       });
   });
